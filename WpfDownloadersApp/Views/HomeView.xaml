@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="WpfDownloadersApp.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfDownloadersApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="LightPink"
+             xmlns:t="http://schemas.xceed.com/wpf/xaml/toolkit" Name="window">
+    <DockPanel>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+ 
+            <t:WatermarkTextBox Margin="5" Grid.ColumnSpan="2" Text="{Binding DownloadPath , UpdateSourceTrigger=PropertyChanged}"  FontSize="30" Watermark="Ener link for download" />
+            <t:WatermarkTextBox  Margin="5"  Text="{Binding SearchPath , UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Watermark="Select path for save" Grid.Row="1" FontSize="30"></t:WatermarkTextBox>
+            <Button  Margin="5"  Command="{Binding SearchFolderPathCommand}" Grid.Column="1" Grid.Row="1">Open</Button>
+            <Button  Margin="5"  Command="{Binding StartCommand}" Grid.Row="3" Grid.ColumnSpan="2">Start</Button>
+            
+        </Grid>
+        <DockPanel>
+
+            <UniformGrid Background="LightGray" Margin="10" Rows="0" Columns="4" DockPanel.Dock="Top">
+                <RadioButton HorizontalAlignment="Center" IsChecked="{Binding InProcDown ,UpdateSourceTrigger=PropertyChanged}" Command="{Binding InProcDownloadCommand}"  Margin="5">In the process of Download</RadioButton>
+                <RadioButton HorizontalAlignment="Center" IsChecked="{Binding IsAll ,UpdateSourceTrigger=PropertyChanged}" Command="{Binding AllDownloadCommand}"  Margin="5">All Download</RadioButton>
+                <RadioButton HorizontalAlignment="Center" IsChecked="{Binding IsDownloaded ,UpdateSourceTrigger=PropertyChanged}"  Command="{Binding DownloadedCommand}"  Margin="5">Downloaded</RadioButton>
+                <RadioButton HorizontalAlignment="Center" IsChecked="{Binding IsError ,UpdateSourceTrigger=PropertyChanged}"  Command="{Binding DownloadErorCommand}"  Margin="5">Error Download</RadioButton>
+            </UniformGrid>
+            <ListBox ItemsSource="{Binding ListDownload , UpdateSourceTrigger=PropertyChanged}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="10">
+                            <ProgressBar Foreground="{Binding Brush}" Margin="10" DockPanel.Dock="Bottom"  Value="{Binding Value,UpdateSourceTrigger=PropertyChanged}"></ProgressBar>
+                            <Label Margin="10" HorizontalAlignment="Center" DockPanel.Dock="Top" Content="{Binding Name,UpdateSourceTrigger=PropertyChanged, StringFormat=Name : 0}"></Label>
+                            <Label Margin="10" DockPanel.Dock="Top" Content="{Binding Messages,UpdateSourceTrigger=PropertyChanged, StringFormat=Info : 0}"></Label>
+                            <Label Margin="10" Content="{Binding Path,UpdateSourceTrigger=PropertyChanged}"></Label>
+                            <Button Margin="10" DockPanel.Dock="Right" Command="{Binding DataContext.ClearCommand  , ElementName=window}"  CommandParameter="{Binding .}">Clear</Button>
+                            <Button IsEnabled="{Binding IsDelete}" Margin="10" DockPanel.Dock="Right" Command="{Binding DataContext.DeleteCommand  , ElementName=window}" CommandParameter="{Binding .}" >🗑</Button>
+                            <Button IsEnabled="{Binding IsMove}"  Margin="10" DockPanel.Dock="Right" Command="{Binding DataContext.MoveCommand  , ElementName=window}" CommandParameter="{Binding .}" >Move</Button>
+                            <Button IsEnabled="{Binding IsRename}" Margin="10" DockPanel.Dock="Right" Command="{Binding DataContext.RenameCommand  , ElementName=window}" CommandParameter="{Binding .}" >Rename</Button>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </DockPanel>
+</UserControl>

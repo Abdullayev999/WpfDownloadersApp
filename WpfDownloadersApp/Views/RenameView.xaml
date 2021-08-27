@@ -1,0 +1,17 @@
+﻿<Window x:Class="WpfDownloadersApp.Views.RenameView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDownloadersApp.Views"
+        mc:Ignorable="d"
+        xmlns:t="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Rename" Height="100" Width="350">
+    <DockPanel>
+        <UniformGrid DockPanel.Dock="Bottom" Rows="0" Columns="2">
+            <Button Command="{Binding CancelCommand}">Cancel</Button>
+            <Button Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=text ,Path=Text}">Save</Button>
+        </UniformGrid>
+        <t:WatermarkTextBox x:Name="text" Text="{Binding Name , UpdateSourceTrigger=PropertyChanged}" Watermark="Enter new file name" FontSize="20"></t:WatermarkTextBox>
+    </DockPanel>
+</Window>
